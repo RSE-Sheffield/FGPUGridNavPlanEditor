@@ -3,7 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:local="clr-namespace:PlanEditor"
-    Title="Map Window" Height="704" Width="836">
+    Title="Map Window" Height="862" Width="1034">
     <Window.Resources>
         <ObjectDataProvider x:Key="ForceDegEnum" MethodName="GetValues" ObjectType="{x:Type sys:Enum}">
             <ObjectDataProvider.MethodParameters>
@@ -83,7 +83,7 @@
                 </TextBox>
             </StackPanel>
         </GroupBox>
-        <Button HorizontalAlignment="Right" Margin="0,0,6,121" Name="buildBtn" Width="159" Click="buildBtn_Click" Height="28" VerticalAlignment="Bottom">Build it!</Button>
+        <Button HorizontalAlignment="Right" Margin="0,0,0,288" Name="buildBtn" Width="159" Click="buildBtn_Click" Height="28" VerticalAlignment="Bottom">Build it!</Button>
         <Button HorizontalAlignment="Right" Margin="0,0,6,29" Name="buildAndExportBtn" Width="157" Height="23" VerticalAlignment="Bottom" Click="buildAndExportBtn_Click">Build &amp; Export</Button>
         <TextBox Height="23" HorizontalAlignment="Right" Margin="0,0,6,56" Name="numOfPedTxt" VerticalAlignment="Bottom" Width="85" >
             <Binding Path="NumberOfStartingPedestrians">
@@ -93,5 +93,14 @@
             </Binding>
         </TextBox>
         <Label Height="28" HorizontalAlignment="Right" Margin="0,0,94,53" Name="label1" VerticalAlignment="Bottom" Width="71">Staring Peds</Label>
+        <StackPanel Height="195" HorizontalAlignment="Right" Margin="0,0,0,87" Name="stackPanel1" VerticalAlignment="Bottom" Width="159">
+            
+            <Label Height="28" Name="label2" Width="120">Start Range</Label>
+            <TextBox Height="23" Name="startRange" Width="120" />
+            <Label Height="28" Name="label3" Width="120">Speed range</Label>
+            <TextBox Height="23" Name="pedRangeMinus" Width="120" />
+            <Label Height="28" Name="label4" Width="120">Something</Label>
+            <TextBox Height="23" Name="textBox1" Width="120" />
+        </StackPanel>
     </Grid>
 </Window>

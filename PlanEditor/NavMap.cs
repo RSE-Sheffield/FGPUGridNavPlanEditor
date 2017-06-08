@@ -1189,17 +1189,30 @@ namespace PlanEditor
                 float xf = (((float)x) / ((float)wallGrid.GetLength(0) - 1))- (float)0.5;
                 float yf = (((float)y) / ((float)wallGrid.GetLength(1) - 1)) - (float)0.5;
 
+                xf = (float) (random.NextDouble() * 10.0);
+                yf = (float)(random.NextDouble() * 10.0);
+                velx *= 10;
+                vely *= 10;
+
+                velx -= 5;
+                vely -= 5;
+
+                int nanim = 0;
+
+                nanim = (int)Math.Floor(random.NextDouble() * 8);
+
+                float stat = (float) (0.8 * random.NextDouble());
+
                 xmlOut.Write("<xagent>\n");
-                xmlOut.Write("<name>agent</name>\n");
+                xmlOut.Write("<name>pedestrian</name>\n");
                 xmlOut.Write("<x>"+ xf+"</x>\n");
                 xmlOut.Write("<y>" + yf + "</y>\n");
-                xmlOut.Write("<velx>" + velx + "</velx>\n");
-                xmlOut.Write("<vely>" + vely + "</vely>\n");
-                xmlOut.Write("<steer_x>" + steer_x + "</steer_x>\n");
-                xmlOut.Write("<steer_y>" + steer_y + "</steer_y>\n");
-                xmlOut.Write("<height>" + height + "</height>\n");
-                xmlOut.Write("<exit>" + exit + "</exit>\n");
-                xmlOut.Write("<speed>" + speed + "</speed>\n");
+                xmlOut.Write("<dirx>" + velx + "</dirx>\n");
+                xmlOut.Write("<diry>" + vely + "</diry>\n");
+                xmlOut.Write("<velocity>" + 1 + "</velocity>");
+                xmlOut.Write("<currentAnim>" + nanim + "</currentAnim>");
+                xmlOut.Write("<nextAnim>" + nanim + "</nextAnim>");
+                xmlOut.Write("<animStatus>" + stat + "</animStatus>");
                 xmlOut.Write("</xagent>\n");
             }
 
@@ -1216,23 +1229,6 @@ namespace PlanEditor
                 xmlOut.WriteLine("</xagent>");
             }
 
-            //Output for Collision agents
-            for (int s = 0; s < this.CollisionAgents.Count; s++)
-            {
-                Agent sagent = this.CollisionAgents[s];
-                xmlOut.WriteLine("<xagent>");
-                xmlOut.WriteLine("<name>pedestrian_generator</name>");
-                xmlOut.WriteLine("<id>" + s + "</id>");
-                xmlOut.WriteLine("<last_group_id>"+ (s* 500).ToString() +"</last_group_id>");
-                xmlOut.WriteLine("<total_agents>0</total_agents>");
-                xmlOut.WriteLine("<production_count>0</production_count>");
-                xmlOut.WriteLine("<agent_type>0</agent_type>");
-                xmlOut.WriteLine("<x>" + sagent.X + "</x>");
-                xmlOut.WriteLine("<y>" + sagent.Y + "</y>");
-                xmlOut.WriteLine("<z>" + sagent.Z + "</z>");
-                xmlOut.WriteLine("</xagent>");
-            }
-
             //Output for navmap
             int navcounter = 0;
             
@@ -1241,18 +1237,11 @@ namespace PlanEditor
                 for (int x = 0; x < Width; x++)
                 {
                     double height = heightGrid != null ? heightGrid[x, y] : 1;
-                    double newx, newy, newz;
-                    navcounter++;
-                    int temp = 0;
-                    int group_id = 0;
-                    newx = (double)x;
-                    newy = (double)y;
-                    newz = 0.0;
+
                     xmlOut.Write("<xagent>\n");
                     xmlOut.Write("<name>navmap</name>\n");
-                    xmlOut.Write("<id>"+ navcounter+"</id>\n");
-                    xmlOut.Write("<xpos>" + x + "</xpos>\n");
-                    xmlOut.Write("<ypos>" + y + "</ypos>\n");
+                    xmlOut.Write("<x>" + x + "</x>\n");
+                    xmlOut.Write("<y>" + y + "</y>\n");
                     
                     xmlOut.Write("<height>"+height+"</height>\n");
                     
@@ -1271,29 +1260,16 @@ namespace PlanEditor
                             exitLayer = i + 1;
                         }
                     }
-                  
+                    xmlOut.Write("<exit_no>" + exitLayer + "</exit_no>");
                     int obsTypeOut;
                     switch( wallGrid[x,y].Type)
                     {
                         case GridPoint.PointType.Wall: obsTypeOut = 1; break;
                         default : obsTypeOut = 0; break;
                     }
-                    xmlOut.Write("<production_count>" + temp + "</production_count>\n");
-                    xmlOut.Write("<agent_type>" + temp + "</agent_type>\n");
-                    xmlOut.Write("<exit_no>" + exitLayer + "</exit_no>\n");  
-                    xmlOut.Write("<next_possible_id>" + temp + "</next_possible_id>\n");
-                    group_id = exitLayer * 200;
-
-                    xmlOut.Write("<last_group_id>" + group_id + "</last_group_id>\n");
-                    xmlOut.Write("<created>" + temp + "</created>\n"); 
-
-                   
-                    xmlOut.Write("<obstacle_type>" + obsTypeOut + "</obstacle_type>\n");
-                    xmlOut.Write("<x>" + newx + "</x>\n");
-                    xmlOut.Write("<y>" + newy + "</y>\n");
-                    xmlOut.Write("<z>" + newz + "</z>\n");
+                    xmlOut.Write("<obstacle_type>" + obsTypeOut + "</obstacle_type>");
                     xmlOut.Write("</xagent>\n");
-                  //  navcounter++;
+                    navcounter++;
                 }
             }
             

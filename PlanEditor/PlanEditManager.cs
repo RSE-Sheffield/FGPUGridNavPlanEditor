@@ -1250,9 +1250,9 @@ namespace PlanEditor
                 Agent tempAgent = agent.getDisplace(startX, startY, xScale);
                 //Must also invert y
                 tempAgent.Y = navMap.Height - tempAgent.Y;
-                shopAgents.Add(tempAgent);
+                colAgents.Add(tempAgent);
             }
-            navMap.ShopAgents = shopAgents;
+            navMap.ShopAgents = colAgents;
            
             
 
